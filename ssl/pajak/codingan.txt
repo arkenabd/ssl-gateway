@@ -1,0 +1,9 @@
+public void methodA(HttpServletRequest request) {
+	X509Certificate[] certs = (X509Certificate[]) request.getAttribute("javax.servlet.request.X509Certificate");
+	X509Certificate userCert = certs [0];
+	String serialNumber = userCert.getSerialNumber();
+}
+
+
+
+https://595a28fd60a2a9e467c1713a686f8a29@3scale-admin.api.apps.pajak.go.id

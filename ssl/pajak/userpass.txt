@@ -1,0 +1,6 @@
+user: GatewayAPIM
+pass: GatewayAPIM
+
+016.p12
+user:016
+pass:1234567

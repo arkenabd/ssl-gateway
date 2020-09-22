@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <sslContextParameters id="sslContextParameters" xmlns="http://camel.apache.org/schema/spring">
+        <trustManagers>
+            <keyStore password="{{apigw.ssl.trust-store-password}}" resource="{{apigw.ssl.trust-store}}"/>
+        </trustManagers>
+    </sslContextParameters>
+    <bean class="org.apache.http.conn.ssl.AllowAllHostnameVerifier" id="x509HostnameVerifier"/>
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route id="ssl-route">
+            <from id="_from2" uri="servlet:/?matchOnUriPrefix=true&amp;disableStreamCache=true"/>
+            <setProperty id="_setProperty1" propertyName="CERT">
+                <simple>${header.CamelHttpServletRequest.getAttribute('javax.servlet.request.X509Certificate')[0].serialNumber}</simple>
+            </setProperty>
+            <log id="_log1" message="cert[0] ${property.CERT}"/>
+            <removeHeader headerName="CamelHttpServletRequest" id="_removeHeader1"/>
+            <setHeader headerName="serialNumber" id="_setHeader1">
+                <simple>
+            		${property.CERT}
+            	</simple>
+            </setHeader>
+            <to id="_to2" uri="{{backend.url}}?bridgeEndpoint=true&amp;throwExceptionOnFailure=false&amp;sslContextParameters=#sslContextParameters&amp;x509HostnameVerifier=x509HostnameVerifier"/>
+        </route>
+    </camelContext>
+</beans>

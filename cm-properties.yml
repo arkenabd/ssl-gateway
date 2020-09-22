@@ -1,0 +1,17 @@
+apiVersion: v1
+data:
+  apigw.ssl.trust-store: 'classpath:server.truststore'
+  apigw.ssl.trust-store-password: '123456'
+  backend.url: 'https4://efaktur-api-3scale-apicast-staging.api.apps.pajak.go.id'
+  server.ssl.key-store: 'classpath:016.p12'
+  server.ssl.key-store-password: '1234567'
+  server.ssl.trust-store: 'classpath:GatewayAPIM.jks'
+  server.ssl.trust-store-password: GatewayAPIM
+kind: ConfigMap
+metadata:
+  creationTimestamp: '2019-12-05T12:14:58Z'
+  name: ssl-gateway-efaktur-properties
+  namespace: api
+  resourceVersion: '28875657'
+  selfLink: /api/v1/namespaces/api/configmaps/ssl-gateway-efaktur-properties
+  uid: daa9c026-1758-11ea-a67f-0050569c946b
